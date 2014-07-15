@@ -1,0 +1,2 @@
+gcc -Wall -fPIC -I./ -c strfun.c cpu.c net.c -DDEBUG
+gcc -shared -o monitor.so strfun.o cpu.o net.o -lpthread

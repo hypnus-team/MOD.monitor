@@ -1,0 +1,1 @@
+int get_net_info(unsigned int *,unsigned int *);

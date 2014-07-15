@@ -1,0 +1,1 @@
+int get_cpu_info(unsigned int *);
