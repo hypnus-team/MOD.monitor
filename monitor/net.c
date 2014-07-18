@@ -1,6 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<stdint.h>
 
 #include "net.h"
 
@@ -18,7 +19,7 @@ int get_net_info(unsigned int * lpInSave,unsigned int *lpOutSave){
         FILE *fp;
         char buf[228];
         char netcard[15];
-		int * lpnetcard = (int *)&netcard;
+		uint32_t * lpnetcard = (uint32_t *)&netcard;
 		double tmp_input_bytes,tmp_output_bytes,tmp_output_packages;
         double input_bytes = 0;
 		double output_bytes = 0;
@@ -45,8 +46,8 @@ int get_net_info(unsigned int * lpInSave,unsigned int *lpOutSave){
             
 			//sscanf注意:有特殊情况 eth:xxxx 连在一起，无空格
             sscanf(buf,"%*[ ]%[^:]:%lf%*f%*f%*f%*f%*f%*f%*f%lf%*f%*f%*f%*f%*f%*f%*f",netcard,&tmp_input_bytes,&tmp_output_bytes);
-
-            if (*lpnetcard == 0x00006F6C){ //ignore lo:
+            
+            if (((*lpnetcard) & 0x00FFFFFF) == 0x00006F6C){ //ignore lo:
 				debug_msg ("\n ignore ! \n");
 			}else{
 				debug_msg ("\n [%s] input: %lf , output: %lf \n",netcard,tmp_input_bytes,tmp_output_bytes);
